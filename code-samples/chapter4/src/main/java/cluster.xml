@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:infinispan:config:5.1 http://www.infinispan.org/schemas/infinispan-config-5.1.xsd"
+      xmlns="urn:infinispan:config:5.1">
+    <global>
+        <transport nodeName="Infinispan-Node2" clusterName="infinispan-cluster" machineId=""/>
+    	 <globalJmxStatistics enabled="true"/>
+    </global>
+    <default>
+        <jmxStatistics enabled="true"/>
+    </default>
+    <namedCache name="clusteredCache">
+        <clustering mode="replication">
+            <stateRetrieval timeout="240000" fetchInMemoryState="true"
+                alwaysProvideInMemoryState="true"/>
+            <sync replTimeout="20000"/>
+        </clustering>
+        <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.JBossStandaloneJTAManagerLookup"
+           transactionMode="TRANSACTIONAL" lockingMode="PESSIMISTIC">
+        	<recovery enabled="true"/>
+        </transaction>
+        <locking lockAcquisitionTimeout="30000"/>
+    </namedCache>
+</infinispan>
